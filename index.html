@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Curved Sidebar</title>
+
+<style>
+:root {
+  --sidebar-width: 60px;
+
+  --theme-primary: #a855f7;
+  --theme-secondary: #ec4899;
+  --theme-light: #c084fc;
+
+  --bg-dark: #1a1a1a;
+  --surface: #2a2a2a;
+
+  --text-primary: #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-dark);
+  min-height: 100vh;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+.sidebar {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  bottom: 8px;
+
+  width: var(--sidebar-width);
+  background: rgba(10, 10, 15, 0.95);
+
+  border-radius: 22px;
+  border: 2px solid rgba(168, 85, 247, 0.6);
+
+  box-shadow:
+    0 0 40px rgba(168, 85, 247, 0.35),
+    inset 0 0 20px rgba(168, 85, 247, 0.1);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 18px 0;
+  z-index: 1000;
+
+  animation: pulse 4s ease-in-out infinite;
+}
+
+/* LOGO */
+.logo-container {
+  width: 45px;
+  height: 45px;
+  margin-bottom: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 16px;
+  background: rgba(168, 85, 247, 0.12);
+  border: 1px solid rgba(168, 85, 247, 0.4);
+
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.logo-container img {
+  width: 32px;
+  height: 32px;
+  filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.8));
+  transition: transform 0.4s ease;
+}
+
+.logo-container:hover img {
+  transform: rotate(360deg);
+}
+
+/* DIVIDER */
+.nav-divider {
+  width: 45px;
+  height: 2px;
+  margin: 18px 0;
+  background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.6), transparent);
+  border-radius: 2px;
+}
+
+/* NAV */
+.nav-group,
+.bottom-group {
+  width: 100%;
+  padding: 0 10px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-item {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(168, 85, 247, 0.25);
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.nav-item img {
+  width: 20px;
+  height: 20px;
+  filter: brightness(0) invert(1);
+  opacity: 0.85;
+}
+
+.nav-item:hover {
+  border-color: var(--theme-primary);
+  box-shadow: 0 0 16px rgba(168, 85, 247, 0.5);
+}
+
+.nav-item:active {
+  transform: scale(0.92);
+}
+
+.spacer {
+  flex: 1;
+}
+
+/* ANIMATION */
+@keyframes pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 40px rgba(168, 85, 247, 0.35),
+      inset 0 0 20px rgba(168, 85, 247, 0.1);
+  }
+  50% {
+    box-shadow:
+      0 0 55px rgba(168, 85, 247, 0.6),
+      inset 0 0 25px rgba(168, 85, 247, 0.15);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<nav class="sidebar">
+
+  <a class="logo-container">
+    <img src="../images/sat4.png" alt="Logo">
+  </a>
+
+  <div class="nav-divider"></div>
+
+  <div class="nav-group">
+    <a href="/" class="nav-item"><img src="../images/oldicons/home.svg"></a>
+    <a href="/g.html" class="nav-item"><img src="../images/oldicons/games.svg"></a>
+    <a href="/a.html" class="nav-item"><img src="../images/oldicons/apps.svg"></a>
+    <a href="/t.html" class="nav-item"><img src="../images/oldicons/ai.svg"></a>
+  </div>
+
+  <div class="spacer"></div>
+
+  <div class="bottom-group">
+    <a href="/pages/github.html" class="nav-item"><img src="../images/oldicons/github.svg"></a>
+    <a href="/pages/discord.html" class="nav-item"><img src="../images/oldicons/discord.svg"></a>
+    <div class="nav-divider"></div>
+    <a href="/s.html" class="nav-item"><img src="../images/oldicons/settings.svg"></a>
+  </div>
+
+</nav>
+
+</body>
+</html>
