@@ -1,124 +1,319 @@
-<!doctype html>
-<html>
-	<head>
-		<meta charset="utf-8" />
-		<meta
-			name="viewport"
-			content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
-		/>
-		<title>Ultraviolet | Sophisticated Web Proxy</title>
-		<meta
-			name="description"
-			content="Ultraviolet is a highly sophisticated proxy used for evading internet censorship or accessing websites in a controlled sandbox using the power of service-workers. Unblock sites today!"
-		/>
-		<meta
-			name="keywords"
-			content="proxy, web proxy, ultraviolet, service workers, unblock websites, unblock chromebook, free web proxy, proxy list, proxy sites, un block chromebook, online proxy, proxy server, proxysite, proxy youtube, bypass securly, bypass iboss, bypass lightspeed filter, holy unblocker, chromebooks, titanium network, unblock youtube, youtube proxy, unblocked youtube, youtube unblocked"
-		/>
-		<meta
-			name="theme-color"
-			media="(prefers-color-scheme: dark)"
-			content="#434c5e"
-		/>
-		<meta name="googlebot" content="index, follow, snippet" />
-		<link rel="shortcut icon" content="favicon.ico" />
-		<link rel="stylesheet" href="index.css" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Vanta</title>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.2.0/css/all.css">
+<style>
+:root {
+	--sidebar-width: 60px;
+	--theme-primary: #1a237e; /* navy blue */
+	--bg-dark: #0b0f2e; /* dark navy background */
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: 'Inter', sans-serif;
+	min-height: 100vh;
+}
+
+/* Fullscreen Vanta fog container */
+#vanta-fog-container {
+		position: fixed;
+		inset: 0;
+		z-index: -1;
+}
+
+/* Prevent horizontal scroll */
+html, body {
+		height: 100%;
+		overflow-x: hidden;
+		background: transparent;
+		font-family: 'Inter', sans-serif;
+}
+
+/* =========================
+	 SIDEBAR
+========================= */
+.sidebar {
+	position: fixed;
+	top: 8px;
+	left: 8px;
+	bottom: 8px;
+
+	width: var(--sidebar-width);
+	background: rgba(10, 15, 50, 0.95); /* navy sidebar */
+	border-radius: 22px;
+	box-shadow:
+		0 0 40px rgba(26,35,126,0.35),
+		inset 0 0 20px rgba(26,35,126,0.1);
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 18px 0;
+	z-index: 1000;
+
+	animation: pulse 4s ease-in-out infinite;
+}
+
+/* LOGO */
+.logo-container {
+	width: 45px;
+	height: 45px;
+	margin-bottom: 30px;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	border-radius: 16px;
+	background: rgba(26,35,126,0.12);
+
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+
+.logo-container img {
+	width: 32px;
+	height: 32px;
+	filter: drop-shadow(0 0 10px rgba(26,35,126,0.8));
+	transition: transform 0.4s ease;
+}
+
+.logo-container:hover img {
+	transform: rotate(360deg);
+}
+
+/* NAVIGATION ICONS */
+.nav-group,
+.bottom-group {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+}
+
+.nav-item {
+	width: 42px;
+	height: 42px;
+	display: flex;
+	align-items: center;
+	justify-content: center; /* centers icon */
+	border-radius: 16px;
+	background: #1a237e6b; /* navy button */
+	cursor: pointer;
+	transition: all 0.25s ease;
+
+	/* REMOVE lines under icons */
+	border: none;
+	outline: none;
+	text-decoration: none;
+	box-shadow: none;
+}
+
+.nav-item i {
+	font-size: 20px;
+	color: white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: transform .2s ease, background .2s ease;
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+/* Remove focus outlines on click */
+.nav-item:focus {
+	outline: none;
+	box-shadow: none;
+}
+
+.nav-item:hover {
+	box-shadow: 0 0 12px rgba(26,35,126,0.5); /* subtle hover glow */
+	    transform: scale(1.07);
+
+
+}
+
+.nav-item:active {
+	transform: scale(0.92);
+}
+
+.spacer {
+	flex: 1;
+}
+
+/* ANIMATION */
+@keyframes pulse {
+	0%, 100% {
+		box-shadow:
+			0 0 40px rgba(26,35,126,0.35),
+			inset 0 0 20px rgba(26,35,126,0.1);
+	}
+	50% {
+		box-shadow:
+			0 0 55px rgba(26,35,126,0.6),
+			inset 0 0 25px rgba(26,35,126,0.15);
+	}
+}
+
+/* =========================
+	 CENTER CONTAINER
+========================= */
+.main-center {
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding-left: calc(var(--sidebar-width) + 40px);
+}
+
+/* =========================
+	 SEARCH BAR (LIGHTER)
+========================= */
+.search-wrapper {
+	width: min(520px, 90%);
+	display: flex;
+	align-items: center;
+
+	background: rgba(20, 28, 90, 0.78);
+	border-radius: 22px;
+	padding: 16px 22px;
+
+	box-shadow:
+		0 0 28px rgba(26,35,126,0.4),
+		inset 0 0 18px rgba(26,35,126,0.18);
+
+	backdrop-filter: blur(12px);
+	transition: all 0.3s ease;
+}
+
+.search-wrapper i {
+	color: #b9c0ff;
+	font-size: 18px;
+	margin-right: 14px;
+	text-shadow: 0 0 8px rgba(26,35,126,0.7);
+}
+
+.search-wrapper input {
+	flex: 1;
+	background: transparent;
+	border: none;
+	outline: none;
+	color: white;
+	font-size: 16px;
+}
+
+.search-wrapper input::placeholder {
+	color: rgba(190, 198, 255, 0.65);
+}
+
+.search-wrapper:focus-within {
+	box-shadow:
+		0 0 42px rgba(26,35,126,0.75),
+		inset 0 0 24px rgba(26,35,126,0.28);
+	transform: scale(1.015);
+}
+
+.search-error {
+	color: #ffb4b4;
+	margin-top: 8px;
+	text-align: center;
+}
+.title {
+left: 50%;
+}
+</style>
+
+<!-- Legacy JS dependencies (kept per request) -->
+<script src="baremux/index.js"></script>
+<script src="uv/uv.bundle.js"></script>
+<script src="uv/uv.config.js"></script>
+
+<!-- VANTA FOG SCRIPTS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.fog.min.js"></script>
+</head>
+
+<body>
+
+<nav class="sidebar">
+	<a class="logo-container">
+		<img src="voltage.svg" alt="Logo">
+	</a>
+
+	<div class="nav-group">
+		<a href="/" class="nav-item"><i class="fa-solid fa-house"></i></a>
+		<a href="/g.html" class="nav-item"><i class="fa-solid fa-gamepad"></i></a>
+		<a href="/a.html" class="nav-item"><i class="fa-solid fa-th-large"></i></a>
+		<a href="/t.html" class="nav-item"><i class="fa-solid fa-robot"></i></a>
+	</div>
+
+	<div class="spacer"></div>
+
+	<div class="bottom-group">
 		
+		<a href="/s.html" class="nav-item"><i class="fa-solid fa-gear"></i></a>
+	</div>
+</nav>
 
-		<script src="baremux/index.js"></script>
-		<script src="uv/uv.bundle.js"></script>
-		<script src="uv/uv.config.js"></script>
+<div id="vanta-fog-container"></div>
 
-		<script type="application/ld+json">
-			{
-				"@context": "https://schema.org",
-				"@type": "FAQPage",
-				"mainEntity": [
-					{
-						"@type": "Question",
-						"name": "What is Ultraviolet (Web Proxy)?",
-						"acceptedAnswer": {
-							"@type": "Answer",
-							"text": "Highly sophisticated proxy used for evading internet censorship or accessing websites in a controlled sandbox using the power of service-workers and more!"
-						}
-					},
-					{
-						"@type": "Question",
-						"name": "How do I unblock sites using Ultraviolet?",
-						"acceptedAnswer": {
-							"@type": "Answer",
-							"text": "Simply head to an official site featuring Ultraviolet such as Holy Unblocker or Incognito! You can also self-host Ultraviolet on your own web server for maximum privacy."
-						}
-					},
-					{
-						"@type": "Question",
-						"name": "What if Ultraviolet is blocked or not working?",
-						"acceptedAnswer": {
-							"@type": "Answer",
-							"text": "Join the Titanium Network Discord at discord.gg/unblock!"
-						}
-					}
-				]
-			}
-		</script>
-	</head>
+<!-- CENTERED SEARCH (styled) - keep IDs so legacy JS still works -->
+<div class="main-center">
+	<form id="uv-form" class="search-wrapper">
+		<i class="fa-solid fa-magnifying-glass"></i>
+		<input id="uv-search-engine" value="https://www.google.com/search?q=%s" type="hidden" />
+		<input id="uv-address" type="text" placeholder="Search The Web " autocomplete="off" />
+	</form>
+	<div class="search-error">
+		<p id="uv-error"></p>
+		<pre id="uv-error-code"></pre>
+	</div>
+</div>
 
-	<body>
-		<div
-			title="Ultraviolet Logo"
-			class="flex-center logo-wrapper header-center"
-		>
-			<img class="logo" src="uv.png" alt="Ultraviolet" />
-			<h1>Ultraviolet | TN</h1>
-		</div>
-		<div class="flex-center desc left-margin">
-			<p>
-				Ultraviolet is highly sophisticated proxy used for evading internet
-				censorship.
-			</p>
-		</div>
+<!-- VANTA init -->
+<script>
+VANTA.FOG({
+		el: "#vanta-fog-container",
+		mouseControls: true,
+		touchControls: true,
+		gyroControls: false,
+		minHeight: 200.0,
+		minWidth: 200.0,
+		highlightColor: 0x1a237e,
+		midtoneColor: 0x0b0f2e,
+		lowlightColor: 0x0f1240,
+		baseColor: 0x050923,
+		blurFactor: 0.9,
+		speed: 0.7,
+		zoom: 0.9
+});
+</script>
 
-		<form id="uv-form" class="flex-center">
-			<input
-				id="uv-search-engine"
-				value="https://www.google.com/search?q=%s"
-				type="hidden"
-			/>
-			<input id="uv-address" type="text" placeholder="Search the web freely" />
-		</form>
-		<div class="desc left-margin">
-			<p id="uv-error"></p>
-			<pre id="uv-error-code"></pre>
-		</div>
-		<footer>
-			<div>
-				<a
-					title="The TitaniumNetwork GitHub organization"
-					href="https://github.com/titaniumnetwork-dev"
-					>TitaniumNetwork</a
-				>
-				<a title="The TitaniumNetwork Discord" href="https://discord.gg/unblock"
-					>Discord</a
-				>
-				<a
-					title="The TompHTTP GitHub organization"
-					href="https://github.com/tomphttp"
-					>TompHTTP</a
-				>
-				<a
-					title="The official deployment repository for Ultraviolet"
-					href="https://github.com/titaniumnetwork-dev/Ultraviolet-App"
-					>GitHub</a
-				>
-				<a title="License information" href="credits.html">Credits</a>
-			</div>
-			<div>
-				<span>Ultraviolet &copy; TN 2023</span>
-			</div>
-		</footer>
-		<iframe style="display: none" id="uv-frame"></iframe>
-		<script src="register-sw.js"></script>
-		<script src="search.js"></script>
-		<script src="index.js"></script>
-	</body>
+<!-- Legacy service worker + search scripts (preserved) -->
+<!-- Proxy toolbar (easy access to change proxied link) -->
+<div id="proxy-toolbar" style="position:fixed;top:8px;right:8px;left:calc(var(--sidebar-width) + 96px);z-index:1200;display:none;gap:8px;align-items:center;">
+	<input id="proxy-url-input" type="text" placeholder="Enter URL or search..." style="flex:1;padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);color:white;outline:none;">
+	<button id="proxy-load-btn" style="padding:10px 14px;border-radius:10px;border:none;background:var(--theme-primary);color:white;cursor:pointer;">Load</button>
+	<button id="proxy-newtab-btn" title="Open frame URL in new tab" style="padding:10px 12px;border-radius:10px;border:none;background:rgba(255,255,255,0.06);color:white;cursor:pointer;">↗</button>
+</div>
+
+<iframe style="display: none" id="uv-frame"></iframe>
+<script src="register-sw.js"></script>
+<script src="search.js"></script>
+<script src="index.js"></script>
+
+</body>
 </html>

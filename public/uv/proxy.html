@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cherri | browser</title>
+    <link rel="shortcut icon" href="/assets/img/fav.png" type="image/x-icon" id="tabIcon">
+    <link rel="stylesheet" href="/assets/css/colors.css" id="css-theme-link">
+    <link rel="stylesheet" href="/assets/css/elements.css">
+    <link rel="stylesheet" href="/assets/css/font.css">
+    <link rel="stylesheet" href="/assets/icons/fonts/remixicon.css">
+    <script src="/assets/js/lib/particles.js"></script>
+    <script src="/baremux/index.js"></script>
+    <script src="/assets/js/colors.js"></script>
+    <script src="/homework/math.all.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/eruda@3.4.3/eruda.min.js"></script>
+    <script>
+        async function swium() {
+            await navigator.serviceWorker.register("/sw.js").then(() => {
+                console.log(
+                    "%ccherri" + "%c SJ sw registered!",
+                    "color: white; background: linear-gradient(to bottom right, #e2588d, #dbd7d7); border-radius: 5px; font-weight: bold; padding: 6px; font-family: monospace;",
+                    "color: white; background: transparent; border-radius: 0px; padding: 0px;"
+                );
+            }).catch(e => {
+                console.log("Error registering service worker (SJ): " + e)
+            });
+        }
+
+        window.addEventListener("load", () => {
+            swium();
+        });
+    </script>
+    <script src="/assets/js/browserfunctions.js"></script>
+</head>
+
+<body>
+    <div class="nav-logo">
+        <img src="/assets/img/fav.png" alt="" onclick="
+            ul.classList.add('active');
+            const blurr = document.createElement('div')
+            blurr.classList.add('bluroverlay')
+            document.body.append(blurr)
+            blurr.addEventListener('click', () => {
+                ul.classList.remove('active')
+                blurr.remove()
+            })
+        ">
+    </div>
+
+    <style>
+        .browser-container {
+            background: var(--bg);
+            width: 100%;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 6;
+            transition: 0.2s;
+        }
+
+        .browser-frame {
+            width: 99.25%;
+            height: calc(100vh - 125px);
+            position: fixed;
+            top: 119px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 12px;
+            border: 1px solid var(--border-3);
+            display: none;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .browser-frame.active {
+            display: block;
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .browser-controls {
+            position: fixed;
+            width: 100%;
+            left: 0;
+            top: 0;
+            padding: 15px;
+        }
+
+        .tabs {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-left: 0px;
+            margin-bottom: 10px;
+        }
+
+        .browser-buttons {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .browser-buttons .hcontainer {
+            display: flex;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-51%);
+            margin-top: 35px;
+            gap: 05px;
+            width: 95%;
+        }
+
+        .browser-buttons button {
+            height: 40px;
+            width: 40px;
+            flex-shrink: 0;
+            padding: 0;
+            font-size: 16px;
+            border-radius: 10px;
+            transition: 0.2s;
+            cursor: pointer;
+            background: var(--bg-2);
+            border: 1px solid var(--border-4);
+            color: var(--bright-text);
+        }
+
+        .browser-buttons button:hover {
+            background: var(--bg-3);
+            color: var(--bright-text);
+        }
+
+        .ri {
+            font-size: 20px;
+        }
+
+        .browser-buttons input {
+            background: var(--bg-3);
+            border: 1px solid var(--border-4);
+            border-radius: 10px;
+            height: 40px;
+            padding: 0 20px;
+            flex: 1;
+            transition: 0.2s;
+            color: var(--bright-text);
+            font-family: Inter;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .browser-buttons input:focus {
+            outline: none;
+            border: 1px solid var(--accent);
+        }
+
+        .browser-buttons input::placeholder {
+            color: var(--text);
+        }
+
+        .tab {
+            background: var(--bg-2);
+            max-width: 200px;
+            min-width: 25px;
+            padding: 10px 15px;
+            border-radius: 10px;
+            transition: 0.2s;
+            border: 1px solid var(--border-4);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .tab span {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            flex: 1;
+            color: var(--text);
+        }
+
+        .tab:hover {
+            background: var(--bg-3);
+        }
+
+        .tab.active {
+            background: var(--bg-3);
+            border: 1px solid var(--border-3);
+        }
+
+        .tab img {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .tab .close-btn {
+            font-size: 20px;
+            cursor: pointer;
+            transition: 0.2s;
+            color: var(--bright-text);
+            flex-shrink: 0;
+        }
+
+        .tab .close-btn:hover {
+            color: var(--accent);
+        }
+
+        .newtab {
+            background: var(--bg-2);
+            height: 40px;
+            width: 40px;
+            border-radius: 10px;
+            transition: 0.2s;
+            cursor: pointer;
+            border: 1px solid var(--border-4);
+            color: var(--bright-text);
+            flex-shrink: 0;
+        }
+
+        .newtab:hover {
+            background: var(--bg-3);
+            color: var(--bright-text);
+        }
+    </style>
+
+    <div class="browser-container">
+        <div class="browser-controls">
+            <div class="tabs">
+                <button class="newtab" onclick="newTab()">
+                    <i class="ri-add-line ri"></i>
+                </button>
+            </div>
+            <div class="browser-buttons">
+                        <div class="hcontainer">
+                            <button id="btn-back" onclick="b()" title="Back">
+                                <i class="ri-arrow-left-line ri"></i>
+                            </button>
+                            <button id="btn-forward" onclick="f()" title="Forward">
+                                <i class="ri-arrow-right-line ri"></i>
+                            </button>
+                            <button id="btn-reload" onclick="r()" title="Reload">
+                                <i class="ri-restart-line ri"></i>
+                            </button>
+                            <input type="text" id="searchbar" placeholder="Search for anything or enter a URL...">
+                            <button id="btn-full" onclick="full()" title="Toggle Fullscreen">
+                                <i class="ri-fullscreen-line ri"></i>
+                            </button>
+                            <button onclick="eruda.init(); this.querySelector('i').style.color='var(--accent)';" title="Dev tools">
+                                <i class="ri-code-line ri"></i>
+                            </button>
+                            <button id="btn-home" onclick="location.href = '/'" title="Home">
+                                <i class="ri-home-4-line ri"></i>
+                            </button>
+                        </div>
+            </div>
+        </div>
+        <div class="browser-loading"></div>
+    </div>
+
+    <div id="cursor-thank-you-zxs"
+        style="position: fixed; top: 0px; left: 0px; width: 16px; height: 16px; border-radius: 50%; background: color-mix(in srgb, var(--accent) 70%, white 30%); pointer-events: none; z-index: 9999; transform: translate(748px, 592px); transition: width 0.15s, height 0.15s, opacity 0.15s; mix-blend-mode: difference; opacity: 0;">
+    </div>
+    <script src="/assets/js/cursor.js"></script>
+
+    <!-- Top searchbar that appears only after user searches in the middle searchbar -->
+    <div id="top-search-wrapper" style="display:none;position:fixed;top:8px;left:50%;transform:translateX(-50%);z-index:1300;width:min(900px,92%);">
+        <input id="top-search-input" type="text" placeholder="Edit or enter a new URL..." style="width:100%;padding:10px 14px;border-radius:10px;border:1px solid rgba(0,0,0,0.08);">
+    </div>
+
+    <!-- Proxied content iframe (this loads the actual UV service path) -->
+    <iframe id="proxied-iframe" style="position:fixed;top:140px;left:0;width:100%;height:calc(100vh - 140px);border:none;z-index:999;" sandbox="allow-scripts allow-forms allow-same-origin allow-popups"></iframe>
+
+    <script src="/search.js"></script>
+    <script>
+        (function () {
+            const params = new URLSearchParams(location.search);
+            const raw = params.get('url') || '';
+            const iframe = document.getElementById('proxied-iframe');
+            const topWrapper = document.getElementById('top-search-wrapper');
+            const topInput = document.getElementById('top-search-input');
+            const middleSearch = document.getElementById('searchbar');
+            const btnBack = document.getElementById('btn-back');
+            const btnForward = document.getElementById('btn-forward');
+            const btnReload = document.getElementById('btn-reload');
+            const btnFull = document.getElementById('btn-full');
+            const btnHome = document.getElementById('btn-home');
+
+            let historyStack = [];
+            let historyIndex = -1;
+
+            function updateNavButtons() {
+                if (btnBack) btnBack.disabled = historyIndex <= 0;
+                if (btnForward) btnForward.disabled = historyIndex >= historyStack.length - 1;
+            }
+
+            function pushHistory(rawUrl) {
+                if (!rawUrl) return;
+                if (historyIndex >= 0 && historyStack[historyIndex] === rawUrl) return;
+                historyStack = historyStack.slice(0, historyIndex + 1);
+                historyStack.push(rawUrl);
+                historyIndex = historyStack.length - 1;
+                updateNavButtons();
+            }
+
+            function setIframeFromRaw(rawUrl, skipPush) {
+                if (!rawUrl) return;
+                try {
+                    const encoded = (typeof __uv$config !== 'undefined' && __uv$config.encodeUrl)
+                        ? __uv$config.encodeUrl(rawUrl)
+                        : encodeURIComponent(rawUrl);
+                    const target = (typeof __uv$config !== 'undefined' && __uv$config.prefix)
+                        ? __uv$config.prefix + encoded
+                        : '/uv/service/' + encoded;
+                    iframe.src = target;
+                    window.__uv_proxy_raw = rawUrl;
+                    if (!skipPush) pushHistory(rawUrl);
+                    if (topWrapper) topWrapper.style.display = 'block';
+                    if (topInput) topInput.value = rawUrl;
+                } catch (e) {
+                    console.error('Failed to set proxied iframe src', e);
+                }
+            }
+
+            // initial load from query param (if present)
+            if (raw) {
+                setIframeFromRaw(raw);
+            }
+
+            // when the user uses the middle searchbar (press Enter), resolve and load
+            if (middleSearch) {
+                middleSearch.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter') {
+                        const v = this.value.trim();
+                        if (!v) return;
+                        const dest = (typeof search === 'function') ? search(v, 'https://www.google.com/search?q=%s') : v;
+                        if (topWrapper) topWrapper.style.display = 'block';
+                        if (topInput) topInput.value = v;
+                        setIframeFromRaw(dest);
+                    }
+                });
+            }
+
+            // allow editing in top input and press Enter to reload iframe
+            if (topInput) {
+                topInput.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter') {
+                        const v = this.value.trim();
+                        if (!v) return;
+                        const dest = (typeof search === 'function') ? search(v, 'https://www.google.com/search?q=%s') : v;
+                        setIframeFromRaw(dest);
+                    }
+                });
+            }
+
+            // navigation functions exposed to onclicks
+            window.b = function () {
+                if (historyIndex > 0) {
+                    historyIndex--;
+                    const rawUrl = historyStack[historyIndex];
+                    setIframeFromRaw(rawUrl, true);
+                    updateNavButtons();
+                }
+            };
+
+            window.f = function () {
+                if (historyIndex < historyStack.length - 1) {
+                    historyIndex++;
+                    const rawUrl = historyStack[historyIndex];
+                    setIframeFromRaw(rawUrl, true);
+                    updateNavButtons();
+                }
+            };
+
+            window.r = function () {
+                try {
+                    iframe.contentWindow.location.reload();
+                } catch (e) {
+                    if (historyIndex >= 0) setIframeFromRaw(historyStack[historyIndex], true);
+                }
+            };
+
+            window.newTab = window.open ? function () {
+                if (historyIndex < 0) return;
+                const rawUrl = historyStack[historyIndex];
+                const encoded = (typeof __uv$config !== 'undefined' && __uv$config.encodeUrl)
+                    ? __uv$config.encodeUrl(rawUrl)
+                    : encodeURIComponent(rawUrl);
+                const target = (typeof __uv$config !== 'undefined' && __uv$config.prefix)
+                    ? __uv$config.prefix + encoded
+                    : '/uv/service/' + encoded;
+                window.open(target, '_blank');
+            } : function () { };
+
+            window.full = function () {
+                const el = document.getElementById('proxied-iframe') || document.documentElement;
+                if (!document.fullscreenElement) {
+                    el.requestFullscreen?.();
+                } else {
+                    document.exitFullscreen?.();
+                }
+            };
+
+            // Poll iframe location to capture in-iframe navigations (when possible)
+            const pollInterval = setInterval(function () {
+                try {
+                    const iw = iframe.contentWindow;
+                    if (!iw) return;
+                    const loc = iw.location.href;
+                    if (!loc) return;
+                    const prefix = (typeof __uv$config !== 'undefined' && __uv$config.prefix) ? __uv$config.prefix : '/uv/service/';
+                    const path = iw.location.pathname + iw.location.search + iw.location.hash;
+                    const idx = path.indexOf(prefix);
+                    if (idx !== -1) {
+                        const encoded = path.substring(idx + prefix.length).split('/')[0];
+                        if (encoded) {
+                            const decoded = (typeof __uv$config !== 'undefined' && __uv$config.decodeUrl) ? __uv$config.decodeUrl(encoded) : decodeURIComponent(encoded);
+                            if (decoded && (historyIndex < 0 || historyStack[historyIndex] !== decoded)) {
+                                pushHistory(decoded);
+                            }
+                        } else {
+                            if (loc && (historyIndex < 0 || historyStack[historyIndex] !== loc)) pushHistory(loc);
+                        }
+                    } else {
+                        if (loc && (historyIndex < 0 || historyStack[historyIndex] !== loc)) pushHistory(loc);
+                    }
+                } catch (e) {
+                    // probable cross-origin navigation: ignore
+                }
+            }, 500);
+
+            updateNavButtons();
+        })();
+    </script>
+
+</body>
+
+</html>
